@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html ng-app="app-test">
+  <head>
+     <meta charset=utf-8> 
+     <title>Warehouse Application</title> 
+     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+     <link rel=stylesheet href="http://fonts.googleapis.com/icon?family=Material+Icons"/>
+     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+     <link rel=stylesheet href=styles/style.css>
+     <script src="scripts/controller.js"></script>
+  </head>
+  <body ng-controller="entryCtrl">
+    
+    <!-- Items -->
+     <nav></nav> 
+     <div>
+     <label id="itemlink">Items</label><span style="display:inline-block; width: 1100px;"></span>
+     <a id="addlink" href="" ng-click="myvalue=true">Add</a>
+	 <div>
+        <table class="table table-bordered">
+         <thead>
+            <th class="col-sm-2">Item Id</th>
+            <th class="col-sm-3">Item Name</th>
+			<th class="col-sm-3">Price</th>
+            <th class="col-sm-2"></th>
+            <th class="col-sm-2"></th>
+         </thead>
+         <tbody>
+            <tr ng-repeat="item in model.items" ng-include="getTemplate(item)"></tr>
+         </tbody>
+        </table>
+        <script type="text/ng-template" id="display">
+	      <td class="col-sm-2">{{item.id}}</td>
+          <td class="col-sm-3">{{item.name}}</td>
+          <td class="col-sm-3">{{item.price}}</td>
+          <td class="col-sm-2"><a href="" ng-click="editContact(item)">Edit</a></td>
+		  <td class="col-sm-2"><a href="" ng-click="removeItem($index)">Delete</a></td>
+        </script>
+        <script type="text/ng-template" id="edit">
+	      <td class="col-sm-2">{item.id}}</td>
+          <td class="col-sm-3"><input type="text" ng-model="model.selected.name" /></td>
+          <td class="col-sm-3"><input type="text" ng-model="model.selected.price" /></td>
+          <td class="col-sm-2"><a href="" ng-click="saveContact($index)">Save</a></td>
+          <td class="col-sm-2"><a href="" ng-click="reset()">Cancel</a></td>
+        </script>
+     </div>
+	    <form ng-submit="addName()" class="form-horizontal" role="form" ng-show="myvalue">
+        <div class="form-group">
+		     <label class="col-sm-2"></label>
+			 <input type="text" class="col-sm-3" ng-model="getName" required/>
+			 <input type="number" ng-model="getPrice" class="col-sm-3" required/>
+             <input type="submit" class="btn btn-primary col-sm-2" value="Add" ng-click="myvalue=false"/>
+			 <label class="col-sm-2"></label>
+		</div>
+        </form>
+	</div>
+	    <!-- Warehouses -->
+		<div>
+        <label id="itemlink">Warehouse</label><span style="display:inline-block; width: 1020px;"></span>
+		<a id="addlink" href="" ng-click="mvalue=true">Add</a>
+		<table class="table table-bordered">
+        <thead>
+            <th class="col-sm-2">Warehouse Id</th>
+            <th class="col-sm-3">Warehouse Name</th>
+			<th class="col-sm-3">Address</th>
+            <th class="col-sm-2"></th>
+            <th class="col-sm-2"></th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="warehouse in model2.warehouses" ng-include="getTempl(warehouse)"></tr>
+        </tbody>
+        </table>
+		<script type="text/ng-template" id="displayware">
+	      <td class="col-sm-2">{{warehouse.wid}}</td>
+          <td class="col-sm-3">{{warehouse.wname}}</td>
+          <td class="col-sm-3">{{warehouse.address}}</td>
+          <td class="col-sm-2"><a href="" ng-click="editWarehouse(warehouse)">Edit</a></td>
+		  <td class="col-sm-2"><a href="" ng-click="removeWarehouse($index)">Delete</a></td>
+        </script>
+        <script type="text/ng-template" id="editware">
+	      <td class="col-sm-2">{{warehouse.wid}}</td>
+          <td class="col-sm-3"><input type="text" ng-model="model2.selecd.wname"/></td>
+          <td class="col-sm-3"><input type="text" ng-model="model2.selecd.address"/></td>
+          <td class="col-sm-2"><a href="" ng-click="saveWarehouse($index)">Save</a></td>
+          <td class="col-sm-2"><a href="" ng-click="resetWarehouse()">Cancel</a></td>
+        </script>
+		<form ng-submit="addWarehouse()" class="form-horizontal" role="form" ng-show="mvalue">
+        <div class="form-group">
+		     <label class="col-sm-2"></label>
+			 <input type="text" class="col-sm-3" ng-model="getWarehouse" required/>
+			 <input type="text" ng-model="getAddress" class="col-sm-3" required/>
+             <input type="submit" class="btn btn-primary col-sm-2" value="Add" ng-click="mvalue=false"/>
+			 <label class="col-sm-2"></label>
+		</div>
+        </form>
+		</div>
+		
+		<!--  Warehouse Items -->
+		<div>
+        <label id="itemlink">Warehouse Items</label>
+		<table class="table table-bordered">
+		<thead>
+			<th class="col-sm-2">Warehouse</th>
+			<th class="col-sm-3">Item</th>
+			<th class="col-sm-3"></th>
+			<th class="col-sm-2"></th>
+			<th class="col-sm-2"></th>
+		</thead>
+		  <tr ng-repeat="tble in tableoptn">
+			<td>{{tble.woptionname}}</td>
+			<td>{{tble.ioptionname}}</td>
+			<td>{{tble.quantity}}</td>
+			<td></td>
+			<td></td>
+		  </tr>
+	    </table>
+		<form ng-submit="" class="form-horizontal" role="form">
+        <div class="form-group">
+			 <select class="col-sm-2" ng-model="getwarehouseoptn"> 
+             <option value="" ng-repeat="v in options1">{{v.label1}}</option>
+             </select>
+			 <select name="singleSelect" class="col-sm-2" id="singleSelect" ng-model="gettabloptnname">
+			 <option value="" ng-repeat="o in options">{{o.label}}</option>
+             </select>
+			 <input type="number" ng-model="getQuantity" class="col-sm-3" required>
+             <input type="submit" class="btn btn-primary"  ng-click="addTableOption()" class="col-sm-4" value="Add">
+		</div>
+        </form>	
+	    </div>
+  </body>
+</html>
